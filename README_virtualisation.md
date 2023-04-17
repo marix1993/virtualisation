@@ -46,7 +46,7 @@ Vagrant / Virtual Box connection
 7. To enable auto save go to `File` and check `Auto Save`
 8. Delete all the comments and change "basic" for "ubuntu/xenial64".
 
-![vagrant connection.png](vagrant%20connection.png)
+![vagrant_connection.png](vagrant_connection.png)
 
 9. Type the following command to start the virtual machine `vagrant up`. (This will create a new virtual machine in VirtualBox and start it up.)
 10. In GitBash find the directory where you have 
