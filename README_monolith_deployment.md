@@ -65,3 +65,26 @@ To do that run `sudo npm install pm2 -g`.
 ### Welcome to Sparta App
 
 ![welcome.png](files%2Fwelcome.png)
+
+
+How to provision all the steps?
+-
+
+1. To do that in `script.sh` file we need to add few lines:
+* `sudo apt-get install python-software-properties -y` to install dependencies.
+* `curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -` it "grabs" exact distribution of software -in this case NodeJS version 6.x that we want.
+* `sudo apt-get install nodejs -y` to use that version that we just "grabbed" and put it into effect.
+* `sudo npm install pm2 -g` to install pm2.
+
+* `cd app` to navigate to app folder where we want to install npm.
+
+* `npm install` it use pm2 dependency to install npm.
+* `node app.js` to run the application.
+
+![new_provision.png](files%2Fnew_provision.png)
+
+2. Next in VS Code terminal use `vagrant up` command and after a while we can check if
+our "Sparta app" works again.
+
+![works_again.png](files%2Fworks_again.png)
+
