@@ -35,7 +35,7 @@ Vagrant, or cloud-based services like AWS or Azure.
 
 Vagrant / Virtual Box connection
 -
-![Vagrant_VirtualBox.png](vagrant_virtual_box.png)
+![Vagrant_VirtualBox.png](files/vagrant_virtual_box.png)
 
 1. Install VirtualBox and Vagrant on your computer.
 2. Navigate to the directory where you want to create your virtual machine.
@@ -46,7 +46,7 @@ Vagrant / Virtual Box connection
 7. To enable auto save go to `File` and check `Auto Save`
 8. Delete all the comments and change "basic" for "ubuntu/xenial64".
 
-![vagrant_connection.png](vagrant_connection.png)
+![vagrant_connection.png](files/vagrant_connection.png)
 
 9. Type the following command to start the virtual machine `vagrant up`. (This will create a new virtual machine in VirtualBox and start it up.)
 10. In GitBash find the directory where you have 
@@ -56,11 +56,11 @@ virtual machine and type the following command to connect to the virtual machine
 
 Four pillars of DevOps:
 -
-![four_pillars.png](four_pillars.png)
+![four_pillars.png](files/four_pillars.png)
 
 What makes a good Dev environment?
 -
-![good_dev_env.png](good_dev_env.png)
+![good_dev_env.png](files/good_dev_env.png)
 
 
 
