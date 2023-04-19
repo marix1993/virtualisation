@@ -67,7 +67,7 @@ To do that run `sudo npm install pm2 -g`.
 ![welcome.png](files%2Fwelcome.png)
 
 
-How to provision all the steps?
+How to provision Sparta App in steps?
 -
 
 1. To do that in `script.sh` file we need to add few lines:
@@ -87,4 +87,65 @@ How to provision all the steps?
 our "Sparta app" works again.
 
 ![works_again.png](files%2Fworks_again.png)
+
+How to provision MongoDB in steps?
+-
+
+1. First we need to create our `scriptdb.sh` (we can leave the same name as previous shell script file
+but it's better to put it somewhere else and include the `path` in our code).
+
+![patch_changed.png](files%2Fpatch_changed.png)
+
+Now in our `scriptdb.sh` file:
+
+* `sudo apt update -y` - update the sources list.
+* `sudo apt upgrade -y` - upgrade any packages available.
+
+
+* `sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv D68FA50FEA312927` - import the MongoDB public key.
+
+
+* `echo "deb https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list` - 
+generate a file with the MongoDB repository url, verifies that key.
+
+
+We need to grab update and upgrade - now it knows about MongoDB so we need to redo it – it has to add new packages
+* `sudo apt update -y`
+* `sudo apt upgrade -y`
+
+
+* `sudo apt-get install -y mongodb-org=3.2.20 mongodb-org-server=3.2.20 mongodb-org-shell=3.2.20 mongodb-org-mongos=3.2.20 mongodb-org-tools=3.2.20` - 
+to install MongoDB on our Virtual Machine.
+
+
+* `sudo systemctl start mongod` - to install downloaded app.
+
+2. To check if everything works in VS Code terminal use: `vagrant up db`.
+3. In GitBash terminal (in our virtualisation folder) use: `vagrant ssh db`.
+4. And use command `sudo systemctl status mongod`.
+
+
+![mongo_check.png](files%2Fmongo_check.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
