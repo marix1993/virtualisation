@@ -127,25 +127,58 @@ to install MongoDB on our Virtual Machine.
 
 ![mongo_check.png](files%2Fmongo_check.png)
 
+How to connect our "App" with "Database" using `environmental variable`?
+-
 
+1. First we need to make sure that our "App" provision shell script 
+won't allow NodeJS app to run in the background. (That's how
+provision for app should look like).
 
+![provision_app.png](files%2Ffiles_db_app_connection%2Fprovision_app.png)
 
+2. Next we need to set up our VMs, so in VS Code terminal use: `vagrant up`.
+3. Next in two Gitbash terminals use `vagrant ssh app` % `vagrant ssh db`.
 
+![ssh_app_db.png](files%2Ffiles_db_app_connection%2Fssh_app_db.png)
 
+4. Next we need to change few settings with our MongoDB:
+- `sudo nano /etc/mongod.conf` , scroll down and change `bindIP:` to 0.0.0.0 (we are changing it so
+anyone can access it, make sure not to do it on production)
 
+![db_change.png](files%2Ffiles_db_app_connection%2Fdb_change.png)
 
+- `ctrl + s` to save and `ctrl + x` to exit
+- `sudo systemctl restart mongod` - to restart our MongoDB
+- `sudo systemctl enable mongod` - to apply our changes and start MongoDB
+- `sudo systemctl status mongod` - to check if it works
 
+5. Next we need to make few changes in our App (we need to connect App with DB by using environmental variable):
+- `sudo nano .bashrc` - to make connect our env variable and make it persistent
 
+![bashrc_change.png](files%2Ffiles_db_app_connection%2Fbashrc_change.png)
 
+- at the end of the file add : `export DB_HOST=mongodb://192.168.10.150:27017/posts`
+  (we need to check if there is variable called DB_HOST and if it is make sure that is
+connected to the right IP of our MongoDB - 150 and port - 27017)
+- `ctrl + s` to save, `ctrl + x` to exit
+- `source .bashrc` - to run bashrc file and apply changes
+- `printenv DB_HOST` - to check if our variable is present and persistent
+- `cd app` - to enter our app directory
+- `npm install` - to install our app
+- now we should look for those two informations:
+- 
+![db_cleared.png](files%2Ffiles_db_app_connection%2Fdb_cleared.png)
 
+- `node seeds/seed.js` - to seed database
+- `node app.js` - to run the app
 
+If everything went fine we should receive that message in Gitbash:
 
+![working1.png](files%2Ffiles_db_app_connection%2Fworking1.png)
 
+and after typing in `http://192.168.10.100:3000/posts` into our browser this should appear:
 
+![working2.png](files%2Ffiles_db_app_connection%2Fworking2.png)
 
-
-
-
-
-
-
+Everything works! (again)
+-
