@@ -166,7 +166,7 @@ connected to the right IP of our MongoDB - 150 and port - 27017)
 - `cd app` - to enter our app directory
 - `npm install` - to install our app
 - now we should look for those two informations:
-- 
+
 ![db_cleared.png](files%2Ffiles_db_app_connection%2Fdb_cleared.png)
 
 - `node seeds/seed.js` - to seed database
@@ -180,5 +180,64 @@ and after typing in `http://192.168.10.100:3000/posts` into our browser this sho
 
 ![working2.png](files%2Ffiles_db_app_connection%2Fworking2.png)
 
-Everything works! (again)
+How to provision step 4?
+-
+
+In step 4 previously we had to use command: `vagrant ssh db` and then add few extra commands manually.
+To automate this process we can refactor our `scriptdb.sh` provision script.
+
+First we need to apply some changes to `mongod.conf` file. This a command to automate it:
+
+* `sudo sed -i 's/^\(\s*bindIp:\).*/\1 0.0.0.0/' /etc/mongod.conf`
+
+`sed`: This command is a stream editor that is used to modify text files. 
+
+`-i`: This option tells sed to modify the file in place
+
+`s/^\(\s*bindIp:\).*/\1 0.0.0.0/` this is the regular expression pattern that sed uses to find and replace text in the file. 
+It is surrounded by single quotes to prevent the shell from interpreting special characters and also make sure that the indent is correct.
+
+Then we need to add :
+
+* `sudo systemctl restart mongod` - to restart MongoDB
+* `sudo systemctl enable mongod` - to start MongoDB and make sure that change is accepted.
+
+The script should look like this:
+
+![step_4.png](files%2Ffiles_db_app_connection%2Fstep_4.png)
+
+How to provision step 5?
+-
+
+In step 5 we had to make changes into `.bashrc` file manually.
+To automate it we can use this commands:
+
+* `echo 'export DB_HOST=mongodb://192.168.10.150:27017/posts' | sudo tee -a /etc/environment`
+
+`echo`: this command outputs a string to the console. In this case, we are using it to output the string export DB_HOST=mongodb://192.168.10.150:27017/posts.
+
+`export`: this keyword is used to create or modify environment variables in the current shell session.
+
+`DB_HOST`: this is the name of the environment variable we are creating.
+
+`mongodb://192.168.10.150:27017/posts`: this is the value of the `DB_HOST variable`. It is a connection string for a MongoDB server running at IP address 
+`192.168.10.150` and listening on `port 27017`, with a database name of `posts`.
+
+`|`: this is a pipe symbol, which is used to redirect the output of one command to another command as input.
+
+`tee`: This command is used to read from standard input and write to standard output and/or files. In this case, we are using it to append the output of the echo command to the system-wide environment file /etc/environment.
+
+and after that in our script we can add:
+
+* `source .bashrc` - we need to run that file again to make changes
+* `cd app` - change to app directory
+* `npm install` 
+* `node seeds/seed.js` - this command is used to execute the code in the seed.js file using the Node.js runtime. 
+* `node app.js` - install app.js
+
+The `script.sh` file should look like this:
+
+![step_5.png](files%2Ffiles_db_app_connection%2Fstep_5.png)
+
+How to provision both steps?
 -
